@@ -134,3 +134,165 @@ heap.insert(4)
 print("Min heap elements:")
 while len(heap.heap) > 0:
     print(heap.extract_min())
+    
+    
+def find_k_closest_points(points, k):
+   
+    distances = [(point[0]**2 + point[1]**2)**0.5 for point in points]
+    
+   
+    zipped_points = zip(points, distances)
+    
+    
+    sorted_points = sorted(zipped_points, key=lambda x: x[1])
+    
+ 
+    k_closest_points = [point[0] for point in sorted_points[:k]]
+    
+    return k_closest_points
+
+
+points = [(3, 4), (-1, -5), (2, 2), (7, 8)]
+k = 2
+print(find_k_closest_points(points, k))
+
+
+from collections import Counter
+
+def find_k_most_frequent_elements(nums, k):
+    
+    freq_counter = Counter(nums)
+    
+  
+    most_common = freq_counter.most_common(k)
+    
+  
+    most_frequent_elements = [element for element, _ in most_common]
+    
+    return most_frequent_elements
+
+
+nums = [3, 1, 4, 4, 5, 2, 6, 1]
+k = 2
+print(find_k_most_frequent_elements(nums, k))
+
+
+# def build_max_heap(arr):
+#     def heapify(arr, n, i):  # Helper function to heapify subtree rooted at index i
+#         largest = i  # Initialize largest as root
+#         left = 2 * i + 1     # left = 2*i + 1
+#         right = 2 * i + 2    # right = 2*i + 2
+        
+#         # Check if left child exists and is greater than root
+#         if left < n and arr[i] < arr[left]:
+#             largest = left
+            
+#         # Check if right child exists and is greater than largest so far
+#         if right < n and arr[i] > arr[right]:
+#             largest = i
+            
+def max_heapify(arr, n, i):
+    largest = i    
+    left = 2 * i + 1   
+    right = 2 * i + 2
+  
+    
+    if left < n and arr[i] < arr[left]:
+        largest = left
+  
+    
+    if right < n and arr[largest] < arr[right]:
+        largest = right
+  
+    
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]  
+  
+      
+        max_heapify(arr, n, largest)
+
+def build_max_heap(arr):
+    n = len(arr)
+    
+    for i in range(n//2 - 1, -1, -1):
+        max_heapify(arr, n, i)
+
+arr = [4, 10, 3, 5, 1]
+build_max_heap(arr)
+print("Max heap:", arr)
+
+
+def minMeetingRooms(meetings):
+    if not meetings:
+        return 0
+    
+    start_times = sorted([m[0] for m in meetings])
+    end_times = sorted([m[1] for m in meetings])
+    
+    num_rooms = 0
+    end_index = 0
+    
+    for i in range(len(meetings)):
+        if start_times[i] < end_times[end_index]:
+            num_rooms += 1
+        else:
+            end_index += 1
+    
+    return num_rooms
+
+
+meetings = [(0, 30), (5, 10), (15, 20)]
+print(minMeetingRooms(meetings))  
+
+
+import heapq
+
+def findKLargestElements(arr, k):
+   
+    if k > len(arr) or k <= 0:
+        return []
+    
+  
+    min_heap = []
+    
+ 
+    for num in arr:
+      
+        heapq.heappush(min_heap, num)
+        
+       
+        if len(min_heap) > k:
+            heapq.heappop(min_heap)
+    
+    
+    result = []
+    while min_heap:
+        result.append(heapq.heappop(min_heap))
+    
+    
+    result.reverse()
+    
+    return result
+
+
+arr = [3, 10, 4, 7, 15]
+k = 3
+print(findKLargestElements(arr, k))  
+
+
+def findKLargestElements(arr, k):
+   
+    if k > len(arr) or k <= 0:
+        return []
+    
+    sorted_arr = sorted(arr, reverse=True)
+    
+    
+    return sorted_arr[:k]
+
+
+arr = [3, 10, 4, 7, 15]
+k = 3
+print(findKLargestElements(arr, k))  
+
+
